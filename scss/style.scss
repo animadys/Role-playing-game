@@ -1,0 +1,41 @@
+#text {
+  background-color: $blue;
+  color: $white;
+  padding: 10px;
+}
+
+#game {
+  max-width: 500px;
+  max-height: 400px;
+  background-color: $white;
+  color: $white;
+  margin: 30px auto 0px;
+  padding: 10px;
+}
+
+#controls,
+#stats {
+  border: 1px solid $blue;
+  padding: 5px;
+  color: $blue;
+}
+
+#monsterStats {
+  display: none;
+  border: 1px solid $blue;
+  padding: 5px;
+  color: $white;
+  background-color: #c70d0d;
+}
+
+.stat {
+  padding-right: 10px;
+}
+
+button {
+  cursor: pointer;
+  color: $blue;
+  background-color: #feac32;
+  background-image: linear-gradient(#fecc4c, #ffac33);
+  border: 3px solid #feac32;
+}
