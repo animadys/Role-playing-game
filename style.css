@@ -85,19 +85,33 @@ legend {
   display: block;
 }
 
+html, body {
+  touch-action: none;
+}
+
 body {
   background-color: #0a0a23;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
 }
 
 #text {
   background-color: #0a0a23;
   color: #fff;
+  align-items: stretch;
   padding: 10px;
+  width: auto;
 }
 
 #game {
-  max-width: 500px;
-  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  width: 367px;
+  height: auto;
   background-color: #fff;
   color: #fff;
   margin: 30px auto 0px;
@@ -109,6 +123,13 @@ body {
   border: 1px solid #0a0a23;
   padding: 5px;
   color: #0a0a23;
+}
+
+#controls {
+  display: flex;
+  justify-content: center;
+  background-color: #0a0a23;
+  padding: 10px 5px;
 }
 
 #monsterStats {
@@ -129,6 +150,53 @@ button {
   background-color: #feac32;
   background-image: linear-gradient(#fecc4c, #ffac33);
   border: 3px solid #feac32;
+  padding: 0 5px;
+}
+
+#button2 {
+  margin: 0 8px;
+}
+
+#image {
+  display: none;
+  align-items: center;
+}
+#image img {
+  max-width: 347px;
+  border: 5px solid #feac32;
+}
+
+.damage {
+  display: none;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: #c70d0d;
+  font-size: 30px;
+  font-weight: 900;
+  padding: 10px;
+  right: 90px;
+  bottom: 70px;
+  z-index: 10;
+  box-shadow: inset 0 0 9px #c70d0d;
+  border-radius: 30%;
+}
+
+.coins {
+  display: none;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: #feac32;
+  font-size: 20px;
+  width: 150px;
+  font-weight: 900;
+  padding: 10px;
+  right: 90px;
+  bottom: 70px;
+  z-index: 10;
+  box-shadow: inset 0 0 9px #feac32;
+  border-radius: 30%;
 }
 
 /*# sourceMappingURL=style.css.map */

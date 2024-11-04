@@ -5,6 +5,8 @@ let currentWeaponIndex = 0;
 let fighting;
 let monsterHealth;
 let inventory = ["stick"];
+let damage;
+let coin;
 
 const button1 = document.querySelector('#button1');
 const button2 = document.querySelector("#button2");
@@ -16,6 +18,10 @@ const goldText = document.querySelector("#goldText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
+const damageText = document.querySelector(".damage");
+const monsterImg = document.querySelector("#image");
+const monsterImgUrl = document.querySelector("#imageUrl");
+
 
 const weapons = [
   { name: 'stick', power: 5 },
@@ -28,17 +34,20 @@ const monsters = [
   {
     name: "slime",
     level: 2,
-    health: 15
+    health: 15,
+    image: './img/slime.jpeg' 
   },
   {
     name: "fanged beast",
     level: 8,
-    health: 60
+    health: 60,
+    image: './img/fanged_beast.jpeg'
    },
    {
     name: "dragon",
     level: 20,
-    health: 300
+    health: 300,
+    image: './img/dragon.jpeg'
    }
 ];
 
@@ -51,7 +60,7 @@ const locations = [
   },
   {
     name: "store",
-    "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
+    "button text": ["Buy 10 health \n(10 gold)", "Buy weapon \n(30 gold)", "Go to town \nsquare"],
     "button functions": [buyHealth, buyWeapon, goTown],
     text: "You enter the store."
   },
@@ -87,7 +96,7 @@ const locations = [
   },
   {
     name: "easter egg",
-    "button text": ["2", "8", "Go to town square?"],
+    "button text": [" 2 ", " 8 ", "Go to town square?"],
     "button functions": [pickTwo, pickEight, goTown],
     text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!"
   }
@@ -111,7 +120,7 @@ function update(location) {
 
 function goTown() {
   update(locations[0]);
-  monsterStats.style.display = 'none';
+  endFight();
 }
 
 function goStore() {
@@ -171,17 +180,31 @@ function goFight() {
   monsterStats.style.display = 'block';
   monsterName.innerText = monsters[fighting].name;
   monsterHealthText.innerText = monsterHealth;
+  monsterImg.style.display = 'flex';
+  monsterImgUrl.src = monsters[fighting].image;
+}
 
+function endFight() {
+  monsterStats.style.display = 'none';
+  monsterImg.style.display = 'none';
+  damageText.style.display = 'none';
+  damageText.classList.remove("coins");
+  damageText.classList.add("damage");
 }
 
 function attack() {
+  
+  damageText.style.display = 'block';
   text.innerText = "The " + monsters[fighting].name + " attacks."
   text.innerText += " You attack it with your " + weapons[currentWeaponIndex].name + ".";
   health -= getMonsterAttackValue(monsters[fighting].level);
   if (isMonsterHit()) {
-    monsterHealth -= weapons[currentWeaponIndex].power + Math.floor(Math.random() * xp) + 1;
+    damage = weapons[currentWeaponIndex].power + Math.floor(Math.random() * xp) + 1;
+    monsterHealth -= damage;
+    damageText.innerText = "-" + damage;
   } else {
     text.innerText += " You miss."
+    damageText.innerText = "0";
   }
   healthText.innerText = health;
   monsterHealthText.innerText = monsterHealth;
@@ -195,7 +218,7 @@ function attack() {
     }
   }
   
-  if (Math.random() < .8 && inventory.length !== 1) {
+  if (Math.random() < .1 && inventory.length !== 1) {
     text.innerText += " Your " + inventory.pop() + " breaks.";
     currentWeaponIndex--;
   } else if (inventory.length == 1 && inventory[0] !== weapons[0].name) {
@@ -214,7 +237,7 @@ function attack() {
 }
 
 function isMonsterHit() {
-  return Math.random() > .2 || health < 20;
+  return Math.random() > .1 || health < 20;
 }
 
 function dodge() {
@@ -241,11 +264,16 @@ function lose() {
 }
 
 function defeatMonster() {
-  gold += Math.floor(monsters[fighting].level * 6.7);
+
+  coin = Math.floor(monsters[fighting].level * 6.7);
+  gold += coin;
   xp += monsters[fighting].level;
   goldText.innerText = gold;
   xpText.innerText = xp;
   update(locations[4]);
+  damageText.innerHTML = "+" + coin + " &#x1FA99;";
+  damageText.classList.add("coins");
+  damageText.classList.remove("damage");
 }
 
 function restart() {
